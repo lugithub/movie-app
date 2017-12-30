@@ -1,8 +1,8 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Actor } from './actor.model';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-movie',
   template: `
     <div>
@@ -16,4 +16,11 @@ import { Actor } from './actor.model';
 export class MovieComponent {
   @Input() title: string;
   @Input() actor: Actor;
+
+  constructor(public cd: ChangeDetectorRef) {
+    setTimeout(() => {
+      this.cd.detach();
+      this.actor.firstName = 'foo';
+    }, 2000);
+  }
 }
